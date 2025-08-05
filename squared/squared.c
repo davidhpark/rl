@@ -4,8 +4,8 @@
 #include <string.h>
 
 const unsigned char NOOP = 0;
-const unsigned char DOWN = 1;
-const unsigned char UP = 2;
+const unsigned char UP = 1;
+const unsigned char DOWN = 2;
 const unsigned char LEFT = 3;
 const unsigned char RIGHT = 4;
 
@@ -42,9 +42,9 @@ void c_step(Squared *env) {
   env->observations[env->agent_y * N + env->agent_x] = EMPTY;
 
   // Update agent
-  if (action == DOWN)
-    env->agent_y--;
   if (action == UP)
+    env->agent_y--;
+  if (action == DOWN)
     env->agent_y++;
   if (action == LEFT)
     env->agent_x--;
@@ -64,6 +64,7 @@ void c_step(Squared *env) {
   if (env->agent_x == env->target_x && env->agent_y == env->target_y) {
     env->rewards[0] = 1.0;
     env->terminals[0] = 1;
+    c_reset(env);
     return;
   }
 
